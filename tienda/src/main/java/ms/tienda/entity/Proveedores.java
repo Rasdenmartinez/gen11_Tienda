@@ -1,7 +1,6 @@
 package ms.tienda.entity;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Entity
 @Table(name = "proveedores")
@@ -9,7 +8,7 @@ public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Double id;
+    private Long id;
     @Column(name="nombre_empresa")
     private String nombreEmpresa;
     @Column(name = "contacto")
@@ -22,7 +21,7 @@ public class Proveedores {
     public Proveedores() {
     }
 
-    public Proveedores(Double id, String nombreEmpresa, String contacto, String correo, String telefono) {
+    public Proveedores(Long id, String nombreEmpresa, String contacto, String correo, String telefono) {
         this.id = id;
         this.nombreEmpresa = nombreEmpresa;
         this.contacto = contacto;
@@ -30,16 +29,16 @@ public class Proveedores {
         this.telefono = telefono;
     }
 
-    public Double getId() {
-        return id;
+    public Long getId() {
+        return this.id;
     }
 
-    public void setId(Double id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getNombreEmpresa() {
-        return nombreEmpresa;
+        return this.nombreEmpresa;
     }
 
     public void setNombreEmpresa(String nombreEmpresa) {
@@ -47,7 +46,7 @@ public class Proveedores {
     }
 
     public String getContacto() {
-        return contacto;
+        return this.contacto;
     }
 
     public void setContacto(String contacto) {
@@ -55,7 +54,7 @@ public class Proveedores {
     }
 
     public String getCorreo() {
-        return correo;
+        return this.correo;
     }
 
     public void setCorreo(String correo) {
@@ -63,7 +62,7 @@ public class Proveedores {
     }
 
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
     public void setTelefono(String telefono) {
