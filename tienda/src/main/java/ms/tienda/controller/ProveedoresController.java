@@ -21,7 +21,7 @@ public class ProveedoresController {
 
     // Obtener proveedor por Id
     @GetMapping("/proveedor/{id}")
-    public Proveedores readById(@PathVariable Long id){
+    public Proveedores readById(@PathVariable Double id){
         return proveedoresService.readById(id);
     }
 
@@ -39,7 +39,7 @@ public class ProveedoresController {
 
     // Eliminar un proveedor
     @DeleteMapping("/proveedor/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Double id){
         proveedoresService.delete(id);
     }
 

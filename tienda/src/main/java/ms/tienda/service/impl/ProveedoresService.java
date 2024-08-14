@@ -19,7 +19,7 @@ public class ProveedoresService implements IProveedoresService {
     }
 
     @Override
-    public Proveedores readById(Long id) {
+    public Proveedores readById(Double id) {
         Optional<Proveedores>proveedoresOptional=proveedoresRepository.findById(id);
         if (proveedoresOptional.isPresent()) {
             return proveedoresOptional.get();
@@ -40,7 +40,7 @@ public class ProveedoresService implements IProveedoresService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Double id) {
         proveedoresRepository.deleteById(id);
     }
 }

@@ -8,7 +8,7 @@ public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Double id;
     @Column(name="nombre_empresa")
     private String nombreEmpresa;
     @Column(name = "contacto")
@@ -21,7 +21,7 @@ public class Proveedores {
     public Proveedores() {
     }
 
-    public Proveedores(Long id, String nombreEmpresa, String contacto, String correo, String telefono) {
+    public Proveedores(Double id, String nombreEmpresa, String contacto, String correo, String telefono) {
         this.id = id;
         this.nombreEmpresa = nombreEmpresa;
         this.contacto = contacto;
@@ -29,11 +29,11 @@ public class Proveedores {
         this.telefono = telefono;
     }
 
-    public Long getId() {
+    public Double getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(Double id) {
         this.id = id;
     }
 
