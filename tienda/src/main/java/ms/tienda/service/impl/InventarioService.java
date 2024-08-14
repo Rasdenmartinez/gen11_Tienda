@@ -20,7 +20,7 @@ public class InventarioService implements IInventarioService {
     }
 
     @Override
-    public Inventario readById(Long id) {
+    public Inventario readById(Double id) {
         Optional<Inventario>inventarioOptional=inventarioRepository.findById(id);
         if(inventarioOptional.isPresent()){
             return inventarioOptional.get();
@@ -40,7 +40,7 @@ public class InventarioService implements IInventarioService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Double id) {
         inventarioRepository.deleteById(id);
     }
 }

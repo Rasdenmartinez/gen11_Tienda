@@ -7,12 +7,12 @@ import java.util.List;
 public interface IInventarioService {
     public List<Inventario> readAll();
 
-    public Inventario readById(Long id);
+    public Inventario readById(Double id);
 
     public Inventario insert(Inventario inventario);
 
     public Inventario update(Inventario inventario);
 
-    public void delete(Long id);
+    public void delete(Double id);
 
 }

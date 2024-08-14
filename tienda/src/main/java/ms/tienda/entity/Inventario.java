@@ -8,42 +8,42 @@ public class Inventario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Double id;
     @Column(name = "producto_id")
-    private Long productoId;
+    private Double productoId;
     @Column(name = "stock")
-    private Double stock;
+    private Integer stock;
 
     public Inventario() {
     }
 
-    public Inventario(Long id, Long productoId, Double stock) {
+    public Inventario(Double id, Double productoId, Integer stock) {
         this.id = id;
         this.productoId = productoId;
         this.stock = stock;
     }
 
-    public Long getId() {
+    public Double getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(Double id) {
         this.id = id;
     }
 
-    public Long getProductoId() {
+    public Double getProductoId() {
         return this.productoId;
     }
 
-    public void setProductoId(Long productoId) {
+    public void setProductoId(Double productoId) {
         this.productoId = productoId;
     }
 
-    public Double getStock() {
+    public Integer getStock() {
         return this.stock;
     }
 
-    public void setStock(Double stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 }

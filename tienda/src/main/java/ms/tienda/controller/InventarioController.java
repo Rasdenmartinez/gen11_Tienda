@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/tienda")
 public class InventarioController {
     @Autowired
     private IInventarioService inventarioService;
@@ -21,7 +21,7 @@ public class InventarioController {
 
     // Obtener item por Id
     @GetMapping("/item/{id}")
-    public Inventario readById(@PathVariable Long id){
+    public Inventario readById(@PathVariable Double id){
         return inventarioService.readById(id);
     }
 
@@ -39,7 +39,7 @@ public class InventarioController {
 
     // Eliminar un item
     @DeleteMapping("/item/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Double id){
         inventarioService.delete(id);
     }
 
