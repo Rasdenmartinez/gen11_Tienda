@@ -1,9 +1,15 @@
 package ms.tienda.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "proveedores")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,55 +23,8 @@ public class Proveedores {
     private String correo;
     @Column(name = "telefono")
     private String telefono;
+    @Column(name = "is_active")
+    private Boolean isActive;
 
-    public Proveedores() {
-    }
 
-    public Proveedores(Double id, String nombreEmpresa, String contacto, String correo, String telefono) {
-        this.id = id;
-        this.nombreEmpresa = nombreEmpresa;
-        this.contacto = contacto;
-        this.correo = correo;
-        this.telefono = telefono;
-    }
-
-    public Double getId() {
-        return this.id;
-    }
-
-    public void setId(Double id) {
-        this.id = id;
-    }
-
-    public String getNombreEmpresa() {
-        return this.nombreEmpresa;
-    }
-
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
-
-    public String getContacto() {
-        return this.contacto;
-    }
-
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
-    }
-
-    public String getCorreo() {
-        return this.correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getTelefono() {
-        return this.telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
 }
