@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 @Entity
 @Table(name ="empleados")
 @Data
@@ -41,5 +42,9 @@ public class Empleados {
 
 	    @Column(name = "update_date")
 	    private LocalDateTime updateDate;
-
+	    
+	    @ManyToOne(cascade = CascadeType.ALL)
+	    @JoinColumn(name = "proveedor_id")
+	    private Proveedores idProveedor;
+	    
 }

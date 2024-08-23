@@ -1,12 +1,9 @@
 package ms.tienda.entity;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.List;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +33,11 @@ public class Clientes {
 
     @Column(name = "telefono")
     private Long telefono;
-
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "empleado_id")
+    private Empleados idEmpleado;
+    
     @Column(name = "is_active")
     private Boolean isActive;
 

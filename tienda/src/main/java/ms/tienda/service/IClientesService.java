@@ -1,8 +1,10 @@
 package ms.tienda.service;
 
 
-import ms.tienda.entity.Clientes;
 import java.util.List;
+
+import ms.tienda.dto.ClienteEmpleadoDTO;
+import ms.tienda.entity.Clientes;
 public interface IClientesService {
 	public List<Clientes> readAll();
 	
@@ -13,5 +15,9 @@ public interface IClientesService {
 	public Clientes update(Clientes clientes);
 	
 	public void delete(Long id);
+
+	public List<Clientes> findBySalario(Double salario);
+
+	public List<ClienteEmpleadoDTO> getClientesWithEmpleadoBySalario(Double salario);
 
 }
