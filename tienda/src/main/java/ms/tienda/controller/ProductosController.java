@@ -14,31 +14,38 @@ public class ProductosController {
 private IProductosService productosService;
 
     //CRUD - Create, Read, Update, Delete;
-    @GetMapping("/persona")
+    @GetMapping("/allProducts")
     public List<Productos> nomreadAll() {
         return productosService.nomreadAll();
     }
 
-    @GetMapping("/productos/{id}")
+    @GetMapping("/productById/{id}")
     public Productos readById(@PathVariable Long id) {
         return productosService.readById(id);
     }
 
-    @PostMapping("/persona")
-    public Productos insert(@RequestBody Productos persona) {
-        return productosService.insert(persona);
+    @PostMapping("/capture")
+    public Productos insert(@RequestBody Productos productos) {
+        return productosService.insert(productos);
 
     }
 
-    @PutMapping("/persona")
+    @PutMapping("/update")
     public Productos update(@RequestBody Productos productos) {
         return productosService.update(productos);
     }
-    @DeleteMapping("productos/{id}")
+
+    @DeleteMapping("delete/{id}")
     public void delete(@PathVariable Long id) {
         productosService.delete(id);
     }
 
+
+   @GetMapping("namePrice")
+    public List<Productos> findByNamePrecio(@RequestParam String name, @RequestParam Double precio){
+
+        return productosService.NamePrecio(name, precio);
+   }
 
 
 }

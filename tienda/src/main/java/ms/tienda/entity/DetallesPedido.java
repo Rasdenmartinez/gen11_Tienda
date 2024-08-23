@@ -1,30 +1,38 @@
 package ms.tienda.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "detalles_Pedido")
+@Table(name = "detalles_pedido")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetallesPedido {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Double id;
     @Column(name = "cantidad")
     private Double cantidad;
-    @Column(name = "precio_Unitario")
-    private Double precio_Unitario;
-    @Column(name = "pedido_Id")
-    private Double pedido_Id;
-    @Column(name = "producto_Id")
-    private Double producto_Id;
-    @Column(name = "is_Active")
-    private Boolean is_Active;
+    @Column(name = "precio_unitario")
+    private Double precioUnitario;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pedido_id")
+    private Pedidos pedidoId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "producto_id")
+    private Productos productoId;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+    @Column(name = "creacion_fecha")
+    private LocalDateTime fechaCreacion;
+    @Column(name = "modificacion_fecha")
+    private LocalDateTime modificacionFecha;
 }

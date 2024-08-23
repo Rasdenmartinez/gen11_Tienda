@@ -3,11 +3,13 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.ConstantesCarlos.Constantes;
 import ms.tienda.entity.DetallesPedido;
+import ms.tienda.model.DetallePedidoDto;
 import ms.tienda.repository.DetallesPedidoRepository;
 import ms.tienda.service.IDetallesPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 @Slf4j
@@ -17,13 +19,13 @@ public class DetallesPedidosDervice implements IDetallesPedidoService {
     DetallesPedidoRepository detallesPedidoRepository;
     @Override
     public List<DetallesPedido> nomreadAll() {
-        return detallesPedidoRepository.findAll().stream().filter(s -> s.getIs_Active()!= Constantes.Filtro).toList();
+        return detallesPedidoRepository.findAll().stream().filter(s -> s.getIsActive()!= Constantes.Filtro).toList();
     }
 
     @Override
     public DetallesPedido readById(Long id){
         Optional<DetallesPedido> detallesPedidoOptional = detallesPedidoRepository.findById(id);
-        if(detallesPedidoOptional.isPresent() && detallesPedidoOptional.get().getIs_Active()!=Constantes.Filtro){
+        if(detallesPedidoOptional.isPresent() && detallesPedidoOptional.get().getIsActive()!=Constantes.Filtro){
             return detallesPedidoOptional.get();
         }
         return new DetallesPedido();
@@ -31,7 +33,7 @@ public class DetallesPedidosDervice implements IDetallesPedidoService {
 
     @Override
     public DetallesPedido insert(DetallesPedido detallesPedido) {
-      detallesPedido.setIs_Active(!Constantes.Filtro);
+      detallesPedido.setIsActive(!Constantes.Filtro);
         return detallesPedidoRepository.save(detallesPedido);
     }
 
@@ -45,10 +47,19 @@ public class DetallesPedidosDervice implements IDetallesPedidoService {
         Optional<DetallesPedido> detallesPedidoOptional = detallesPedidoRepository.findById(id);
         if(detallesPedidoOptional.isPresent()){
             DetallesPedido detallesPedido = detallesPedidoOptional.get();
-            detallesPedido.setIs_Active(Constantes.Filtro);
+            detallesPedido.setIsActive(Constantes.Filtro);
             log.info(" Dettalle de pedido {} deleted", id);
         }
 
 
+    }
+
+    @Override
+    public List<DetallePedidoDto> responseDtallePedidoDto(Double id, String name,
+                                                          String descripcionProducto,
+                                                          Double precio, LocalDateTime fechaPedido,
+                                                          Double totalPedido)
+    {
+        return List.of();
     }
 }
