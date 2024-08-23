@@ -79,6 +79,11 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>ms</groupId>
+			<artifactId>ejercicio1</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
