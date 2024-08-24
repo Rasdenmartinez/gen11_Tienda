@@ -1,6 +1,10 @@
 package ms.tienda.controller;
 
 import ms.tienda.entity.Proveedores;
+import ms.tienda.model.ResponseContactos;
+import ms.tienda.model.ResponseDelete;
+import ms.tienda.model.ResponseProveedor;
+import ms.tienda.model.ResponseProveedores;
 import ms.tienda.service.IProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +19,13 @@ public class ProveedoresController {
 
     // Obtener todos los proveedores
     @GetMapping("/proveedores")
-    public List<Proveedores>readAll(){
+    public List<ResponseProveedores>readAll(){
         return proveedoresService.readAll();
     }
 
     // Obtener proveedor por Id
     @GetMapping("/proveedor/{id}")
-    public Proveedores readById(@PathVariable Double id){
+    public ResponseProveedor readById(@PathVariable Double id){
         return proveedoresService.readById(id);
     }
 
@@ -39,8 +43,13 @@ public class ProveedoresController {
 
     // Eliminar un proveedor
     @DeleteMapping("/proveedor/{id}")
-    public void delete(@PathVariable Double id){
-        proveedoresService.delete(id);
+    public ResponseDelete delete(@PathVariable Double id){
+        return proveedoresService.delete(id);
     }
 
+    // Query
+    @GetMapping("/proveedores/contacto")
+    public List<ResponseContactos> contacto(@RequestParam String contacto){
+        return proveedoresService.contactoProveedor(contacto);
+    }
 }
