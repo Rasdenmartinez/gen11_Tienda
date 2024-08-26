@@ -1,10 +1,7 @@
 package ms.tienda.service;
 
 import ms.tienda.entity.Proveedores;
-import ms.tienda.model.ResponseContactos;
-import ms.tienda.model.ResponseDelete;
-import ms.tienda.model.ResponseProveedor;
-import ms.tienda.model.ResponseProveedores;
+import ms.tienda.model.*;
 
 import java.util.List;
 

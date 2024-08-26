@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseProveedor {
+    private String mensaje;
+    private String codigo;
     private Double id;
     private String nombreEmpresa;
     private String contacto;

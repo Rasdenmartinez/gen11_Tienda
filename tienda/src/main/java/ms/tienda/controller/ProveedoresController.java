@@ -7,6 +7,7 @@ import ms.tienda.model.ResponseProveedor;
 import ms.tienda.model.ResponseProveedores;
 import ms.tienda.service.IProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,36 +19,42 @@ public class ProveedoresController {
     private IProveedoresService proveedoresService;
 
     // Obtener todos los proveedores
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/proveedores")
     public List<ResponseProveedores>readAll(){
         return proveedoresService.readAll();
     }
 
     // Obtener proveedor por Id
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/proveedor/{id}")
     public ResponseProveedor readById(@PathVariable Double id){
         return proveedoresService.readById(id);
     }
 
     // Crear un nuevo proveedor
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/proveedor")
     public Proveedores insert(@RequestBody Proveedores proveedor){
         return proveedoresService.insert(proveedor);
     }
 
     // Editar un proveedor
-    @PutMapping("/proveedor")
-    public Proveedores update(@RequestBody Proveedores proveedor){
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/proveedor/{id}")
+    public Proveedores update(@RequestBody Proveedores proveedor, @PathVariable Double id){
         return proveedoresService.update(proveedor);
     }
 
     // Eliminar un proveedor
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/proveedor/{id}")
     public ResponseDelete delete(@PathVariable Double id){
         return proveedoresService.delete(id);
     }
 
     // Query
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/proveedores/contacto")
     public List<ResponseContactos> contacto(@RequestParam String contacto){
         return proveedoresService.contactoProveedor(contacto);

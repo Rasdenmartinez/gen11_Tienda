@@ -3,10 +3,8 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.constantes.ProveedoresConstantes;
 import ms.tienda.entity.Proveedores;
-import ms.tienda.model.ResponseContactos;
-import ms.tienda.model.ResponseDelete;
-import ms.tienda.model.ResponseProveedor;
-import ms.tienda.model.ResponseProveedores;
+import ms.tienda.exceptions.ResponseNotFound;
+import ms.tienda.model.*;
 import ms.tienda.repository.ProveedoresRepository;
 import ms.tienda.service.IProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,10 @@ public class ProveedoresService implements IProveedoresService {
     @Override
     public List<ResponseProveedores> readAll() {
         List<Proveedores> proveedoresList = proveedoresRepository.findAll().stream().filter(proveedores -> proveedores.getIsActive()!=ProveedoresConstantes.Filtrado).toList();
+        if (proveedoresList.isEmpty()){
+            log.error("La consulta no arrojo ningun resultado");
+            throw new ResponseNotFound("La consulta no arrojo ningun resultado");
+        }
         return proveedoresList.stream().map(proveedores -> {
             ResponseProveedores responseProveedores = new ResponseProveedores();
             responseProveedores.setId(proveedores.getId());
@@ -36,24 +38,35 @@ public class ProveedoresService implements IProveedoresService {
     @Override
     public ResponseProveedor readById(Double id) {
         Optional<Proveedores>proveedoresOptional=proveedoresRepository.findById(id);
+        if (proveedoresOptional.isPresent() && proveedoresOptional.get().getIsActive()==ProveedoresConstantes.Filtrado){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
+        if (proveedoresOptional.isEmpty()){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
         if (proveedoresOptional.isPresent() && proveedoresOptional.get().getIsActive()!= ProveedoresConstantes.Filtrado) {
             Proveedores proveedor = proveedoresOptional.get();
             ResponseProveedor responseProveedor = new ResponseProveedor();
+            responseProveedor.setMensaje("Consulta exitosa");
+            responseProveedor.setCodigo("200");
             responseProveedor.setId(proveedor.getId());
             responseProveedor.setNombreEmpresa(proveedor.getNombreEmpresa());
             responseProveedor.setContacto(proveedor.getContacto());
             responseProveedor.setCorreo(proveedor.getCorreo());
             responseProveedor.setTelefono(proveedor.getTelefono());
+            log.info("Consulta exitosa");
             return responseProveedor;
-        }else {
-            return new ResponseProveedor();
         }
+        return new ResponseProveedor();
     }
 
     // Insert nuevo Proveedor
     @Override
     public Proveedores insert(Proveedores proveedor) {
-
         return proveedoresRepository.save(proveedor);
     }
 
@@ -68,11 +81,13 @@ public class ProveedoresService implements IProveedoresService {
     public ResponseDelete delete(Double id) {
         Optional<Proveedores>proveedoresOptional=proveedoresRepository.findById(id);
         if (proveedoresOptional.isPresent() && proveedoresOptional.get().getIsActive()==ProveedoresConstantes.Filtrado){
-            ResponseDelete response = new ResponseDelete();
-            response.setId(id);
-            response.setMensaje("El elemento no existe");
             log.error("El elemento {} no existe",id);
-            return response;
+            throw new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
+        if (proveedoresOptional.isEmpty()){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
         }
 
         if (proveedoresOptional.isPresent()){
@@ -85,14 +100,6 @@ public class ProveedoresService implements IProveedoresService {
             log.info("Elemento {} borrado exitosamente",id);
             return responseDelete;
         }
-
-        if (proveedoresOptional.isEmpty()){
-            ResponseDelete response = new ResponseDelete();
-            response.setId(id);
-            response.setMensaje("El elemento no existe");
-            log.error("El elemento {} no existe",id);
-            return response;
-        }
         return new ResponseDelete();
     }
 
@@ -100,6 +107,10 @@ public class ProveedoresService implements IProveedoresService {
     @Override
     public List<ResponseContactos> contactoProveedor(String contacto){
         List<Proveedores> proveedoresList=proveedoresRepository.findByContacto(contacto);
+        if (proveedoresList.isEmpty()){
+            log.error("El contacto {} no se encontro",contacto);
+            throw new ResponseNotFound("El contacto " + contacto + " no se encontro");
+        }
         return proveedoresList.stream().map(proveedores -> {
             ResponseContactos responseContactos = new ResponseContactos();
             responseContactos.setNombreEmpresa(proveedores.getNombreEmpresa());
