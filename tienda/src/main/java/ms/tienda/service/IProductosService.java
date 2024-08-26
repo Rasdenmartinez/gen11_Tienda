@@ -18,4 +18,8 @@ public interface IProductosService {
      public void delete(Long id);
 
 
+<<<<<<< HEAD
+=======
+    List<Productos> NamePrecio(String name, Double precio);
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
 }

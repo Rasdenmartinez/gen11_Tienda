@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
+=======
+@RequestMapping("/tienda")
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
 public class DetallesPedidoController {
     @Autowired
     private IDetallesPedidoService iDetallesPedidoService;

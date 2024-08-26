@@ -19,13 +19,21 @@ public class PedidosService implements IPedidosService {
     @Override
     public List<Pedidos> nomreadAll() {
 
+<<<<<<< HEAD
         return pedidosRepository.findAll().stream().filter(s-> s.getIs_Active()!= Constantes.Filtro).toList() ;
+=======
+        return pedidosRepository.findAll().stream().filter(s-> s.getIsActive()!= Constantes.Filtro).toList() ;
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
     }
 
     @Override
     public Pedidos readById(Long id){
         Optional<Pedidos> pedidosOptional = pedidosRepository.findById(id);
+<<<<<<< HEAD
         if(pedidosOptional.isPresent() && pedidosOptional.get().getIs_Active()!=Constantes.Filtro){
+=======
+        if(pedidosOptional.isPresent() && pedidosOptional.get().getIsActive()!=Constantes.Filtro){
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
            return pedidosOptional.get();
         }
         return new Pedidos();
@@ -33,7 +41,11 @@ public class PedidosService implements IPedidosService {
 
     @Override
     public Pedidos insert(Pedidos pedidos) {
+<<<<<<< HEAD
         pedidos.setIs_Active(!Constantes.Filtro);
+=======
+        pedidos.setIsActive(!Constantes.Filtro);
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
         return pedidosRepository.save(pedidos);
     }
 
@@ -48,7 +60,11 @@ public class PedidosService implements IPedidosService {
         Optional<Pedidos> pedidosOptional = pedidosRepository.findById(id);
         if(pedidosOptional.isPresent()){
             Pedidos pedidos = pedidosOptional.get();
+<<<<<<< HEAD
             pedidos.setIs_Active(Constantes.Filtro);
+=======
+            pedidos.setIsActive(Constantes.Filtro);
+>>>>>>> 3cc2d4a95c00c2da8af68465b8b3847d44cb7ad4
             pedidosRepository.save(pedidos);
             log.info(" Pedido {} deleted", id);
         }
