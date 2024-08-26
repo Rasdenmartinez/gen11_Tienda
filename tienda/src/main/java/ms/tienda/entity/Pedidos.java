@@ -16,15 +16,16 @@ public class Pedidos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Double id;
+    private Integer idPedido;
     @Column(name = "fecha_pedido")
     private LocalDateTime fechaPedido;
     @Column(name = "total_pedido")
     private Double totalPedido;
-
+    //Join Clientes
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clientes_Id")
-  //  private Clientes clientesId;
+    @JoinColumn(name = "cliente_Id")
+    private Clientes clientesId;
+
     @Column(name = "is_active")
     private Boolean isActive;
     @Column(name = "creacion_fecha")

@@ -3,6 +3,7 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.ConstantesCarlos.Constantes;
 import ms.tienda.entity.Pedidos;
+import ms.tienda.model.PedidosDto;
 import ms.tienda.repository.PedidosRepository;
 import ms.tienda.service.IPedidosService;
 import ms.tienda.service.IProductosService;
@@ -19,13 +20,13 @@ public class PedidosService implements IPedidosService {
     @Override
     public List<Pedidos> nomreadAll() {
 
-        return pedidosRepository.findAll().stream().filter(s-> s.getIsActive()!= Constantes.Filtro).toList() ;
+        return pedidosRepository.findAll().stream().filter(s-> s.getIsActive()== Constantes.Filtro).toList() ;
     }
 
     @Override
-    public Pedidos readById(Long id){
-        Optional<Pedidos> pedidosOptional = pedidosRepository.findById(id);
-        if(pedidosOptional.isPresent() && pedidosOptional.get().getIsActive()!=Constantes.Filtro){
+    public Pedidos readById(Integer idPedido){
+        Optional<Pedidos> pedidosOptional = pedidosRepository.findById(idPedido);
+        if(pedidosOptional.isPresent() && pedidosOptional.get().getIsActive()==Constantes.Filtro){
            return pedidosOptional.get();
         }
         return new Pedidos();
@@ -33,7 +34,7 @@ public class PedidosService implements IPedidosService {
 
     @Override
     public Pedidos insert(Pedidos pedidos) {
-        pedidos.setIsActive(!Constantes.Filtro);
+        pedidos.setIsActive(Constantes.Filtro);
         return pedidosRepository.save(pedidos);
     }
 
@@ -44,14 +45,28 @@ public class PedidosService implements IPedidosService {
     }
 
     @Override
-    public void delete(Long id){
-        Optional<Pedidos> pedidosOptional = pedidosRepository.findById(id);
+    public void delete(Integer idPedido){
+        Optional<Pedidos> pedidosOptional = pedidosRepository.findById(idPedido);
         if(pedidosOptional.isPresent()){
             Pedidos pedidos = pedidosOptional.get();
             pedidos.setIsActive(Constantes.Filtro);
             pedidosRepository.save(pedidos);
-            log.info(" Pedido {} deleted", id);
+            log.info(" Pedido {} deleted", idPedido);
         }
         {log.error("El id departamento no existe");}
+    }
+
+    @Override
+    public List<PedidosDto> findByPedidosDto() {
+       List<Pedidos> pedidosList =  pedidosRepository.findByPedidosDto();
+       return pedidosList.stream().map(s->{
+       PedidosDto pedidosDto =new PedidosDto();
+       pedidosDto.setIdPedido(s.getIdPedido());
+       pedidosDto.setFechaPedido(s.getFechaPedido());
+       pedidosDto.setTotalPedido(s.getTotalPedido());
+       pedidosDto.setClientesId(s.getClientesId().getId());
+       pedidosDto.setNombre(s.getClientesId().getNombre());
+     return pedidosDto;
+        }).toList();
     }
 }

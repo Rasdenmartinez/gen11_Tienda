@@ -7,9 +7,26 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface DetallesPedidoRepository extends JpaRepository<DetallesPedido, Long> {
-  /*  @Query(value = "select de.id, de.nombre, pe.edad, pe.domicilio, pe.departamento_id, pe.is_active, pe.fecha_creacion from persona pe\n" +
-            "inner join departamento de on pe.departamento_id = de.id \n" +"where pe.nombre = :nombre", nativeQuery = true)
-return*/
-  List<DetallePedidoDto> obtederDatosPersonDepto(String nombre);
+public interface DetallesPedidoRepository extends JpaRepository<DetallesPedido, Integer> {
+
+  /* @Query(value = "select dp.id,  dp.creacion_fecha, dp.cantidad, p.id, p.descripcion_producto " +
+             " from detalles_pedido dp\n" +
+             " inner join productos p on dp.producto_id = p.id \n" +
+             " where dp.id = :id and p.producto = :name ", nativeQuery = true)
+  List<DetallesPedido> findByIdDetallesPedidoAndNameProductos(Integer id, String name);*/
+
+    @Query(value = "SELECT detalles_pedido.id, detalles_pedido.cantidad, detalles_pedido.precio_unitario,\n" +
+            "       detalles_pedido.pedido_id, detalles_pedido.producto_id, detalles_pedido.is_active,\n" +
+            "       detalles_pedido.creacion_fecha, detalles_pedido.modificacion_fecha\n" +
+            " FROM detalles_pedido\n" +
+            " INNER JOIN productos p ON detalles_pedido.producto_id = p.id\n" +
+            " INNER JOIN pedidos pe ON detalles_pedido.pedido_id = pe.id " , nativeQuery = true)
+    List<DetallesPedido> findByIdDetallesPedidoProductoDto();
+    @Query(value = "SELECT detalles_pedido.id, detalles_pedido.cantidad, detalles_pedido.precio_unitario,\n" +
+            "       detalles_pedido.pedido_id, detalles_pedido.producto_id, detalles_pedido.is_active,\n" +
+            "       detalles_pedido.creacion_fecha, detalles_pedido.modificacion_fecha\n" +
+            " FROM detalles_pedido\n", nativeQuery = true)
+
+    List<DetallesPedido> finDetallesSimple();
+
 }
