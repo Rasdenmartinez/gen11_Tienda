@@ -1,10 +1,7 @@
 package ms.tienda.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +28,7 @@ public class Proveedores {
     private String correo;
     @Column(name = "telefono")
     @NotNull
+    @Pattern(regexp = "^\\d{10}$")
     private String telefono;
     @Column(name = "is_active")
     private Boolean isActive;
