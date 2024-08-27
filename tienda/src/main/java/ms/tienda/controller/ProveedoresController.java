@@ -1,5 +1,7 @@
 package ms.tienda.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import ms.tienda.entity.Proveedores;
 import ms.tienda.model.ResponseContactos;
 import ms.tienda.model.ResponseDelete;
@@ -8,6 +10,7 @@ import ms.tienda.model.ResponseProveedores;
 import ms.tienda.service.IProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +38,14 @@ public class ProveedoresController {
     // Crear un nuevo proveedor
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/proveedor")
-    public Proveedores insert(@RequestBody Proveedores proveedor){
+    public Proveedores insert(@RequestBody @Valid Proveedores proveedor){
         return proveedoresService.insert(proveedor);
     }
 
     // Editar un proveedor
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/proveedor/{id}")
-    public Proveedores update(@RequestBody Proveedores proveedor, @PathVariable Double id){
+    public Proveedores update(@RequestBody @Valid Proveedores proveedor, @PathVariable Double id){
         return proveedoresService.update(proveedor);
     }
 
