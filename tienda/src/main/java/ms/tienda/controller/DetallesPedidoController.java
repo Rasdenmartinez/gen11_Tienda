@@ -7,6 +7,7 @@ import ms.tienda.model.DetallesSinJoin;
 import ms.tienda.service.IDetallesPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bimd.List
 
 import java.util.List;
 
