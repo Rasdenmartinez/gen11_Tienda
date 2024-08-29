@@ -1,6 +1,7 @@
 package ms.tienda.service;
 
 
+import ms.tienda.dto.EmpleadoProveedorDTO;
 import ms.tienda.entity.Empleados;
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface IEmpleadosService {
 	public Empleados update(Empleados empleados);
 	
 	public void delete(Long id);
+	
+	public List<EmpleadoProveedorDTO> findByEmpleadosProveedores();
 	
 }

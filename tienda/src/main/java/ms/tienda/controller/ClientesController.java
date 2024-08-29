@@ -1,11 +1,22 @@
 package ms.tienda.controller;
 
-import ms.tienda.entity.Clientes;
-import ms.tienda.service.IClientesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ms.tienda.dto.ClienteEmpleadoDTO;
+import ms.tienda.entity.Clientes;
+import ms.tienda.model.ClientesResponse;
+import ms.tienda.service.IClientesService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -17,6 +28,12 @@ public class ClientesController {
     @GetMapping("/clientes")
     public List<Clientes> readAll() {
         return clientesService.readAll();
+    }
+    
+    //leer todo con el response
+    @GetMapping("/clientes-response")
+    public ClientesResponse leerTodo() {
+    	return clientesService.leerTodo();
     }
 
     @GetMapping("/clientes/{id}")
@@ -37,6 +54,16 @@ public class ClientesController {
     @DeleteMapping("clientes/{id}")
     public void delete(@PathVariable Long id) {
         clientesService.delete(id);
+    }
+    
+    @GetMapping("/salario")
+    public List<Clientes> findBySalario(@RequestParam Double salario) {
+        return clientesService.findBySalario(salario);
+    }
+    
+    @GetMapping("/clientes-con-empleados")
+    public List<ClienteEmpleadoDTO> getClientesConEmpleados(@RequestParam Double salario) {
+        return clientesService.getClientesWithEmpleadoBySalario(salario);
     }
  
 }

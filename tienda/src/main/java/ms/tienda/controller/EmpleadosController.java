@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ms.tienda.dto.EmpleadoProveedorDTO;
 import ms.tienda.entity.Empleados;
 import ms.tienda.service.IEmpleadosService;
 
@@ -45,6 +46,11 @@ public class EmpleadosController {
     @DeleteMapping("empleados/{id}")
     public void delete(@PathVariable Long id) {
         empleadosService.delete(id);
+    }
+
+    @GetMapping("/empleados-con-proveedores")
+    public List<EmpleadoProveedorDTO> findByEmpleadosProveedore(){
+    	return empleadosService.findByEmpleadosProveedores();
     }
 
 }
