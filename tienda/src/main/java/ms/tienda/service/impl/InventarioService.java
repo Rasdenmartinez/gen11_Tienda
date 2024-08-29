@@ -3,6 +3,9 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.constantes.InventarioConstantes;
 import ms.tienda.entity.Inventario;
+import ms.tienda.exceptions.ResponseNotFound;
+import ms.tienda.model.ResponseDelete;
+import ms.tienda.model.ResponseInventario;
 import ms.tienda.repository.InventarioRepository;
 import ms.tienda.service.IInventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +21,44 @@ public class InventarioService implements IInventarioService {
     InventarioRepository inventarioRepository;
 
     @Override
-    public List<Inventario> readAll() {
-        return inventarioRepository.findAll().stream().filter(inventario -> inventario.getIsActive()!= InventarioConstantes.Filtrado).toList();
+    public List<ResponseInventario> readAll() {
+        List<Inventario>inventarioList=inventarioRepository.findAll().stream().filter(inventario -> inventario.getIsActive()!=InventarioConstantes.Filtrado).toList();
+        if (inventarioList.isEmpty()){
+            log.error("La consulta no arrojo ningun resultado");
+            throw new ResponseNotFound("La consulta no arrojo ningun resultado");
+        }
+        return inventarioList.stream().map(inventario -> {
+            ResponseInventario responseInventario = new ResponseInventario();
+            responseInventario.setId(inventario.getId());
+            responseInventario.setProductoId(inventario.getProductoId());
+            responseInventario.setStock(inventario.getStock());
+            return responseInventario;
+        }).toList();
     }
 
     @Override
-    public Inventario readById(Double id) {
+    public ResponseInventario readById(Double id) {
         Optional<Inventario>inventarioOptional=inventarioRepository.findById(id);
-        if(inventarioOptional.isPresent() && inventarioOptional.get().getIsActive()!=InventarioConstantes.Filtrado){
-            return inventarioOptional.get();
-        }else {
-            return new Inventario();
+        if(inventarioOptional.isPresent() && inventarioOptional.get().getIsActive()==InventarioConstantes.Filtrado){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
         }
+
+        if (inventarioOptional.isEmpty()){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
+        if (inventarioOptional.isPresent() && inventarioOptional.get().getIsActive()!=InventarioConstantes.Filtrado){
+            Inventario inventario = inventarioOptional.get();
+            ResponseInventario responseInventario = new ResponseInventario();
+            responseInventario.setId(inventario.getId());
+            responseInventario.setProductoId(inventario.getProductoId());
+            responseInventario.setStock(inventario.getStock());
+            log.info("Consulta exitosa");
+            return responseInventario;
+        }
+        return new ResponseInventario();
     }
 
     @Override
@@ -43,15 +72,28 @@ public class InventarioService implements IInventarioService {
     }
 
     @Override
-    public void delete(Double id) {
+    public ResponseDelete delete(Double id) {
         Optional<Inventario>inventarioOptional=inventarioRepository.findById(id);
+        if (inventarioOptional.isPresent() && inventarioOptional.get().getIsActive()==InventarioConstantes.Filtrado){
+            log.error("El elemento {} no existe",id);
+            throw new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
+        if (inventarioOptional.isEmpty()){
+            log.error("El elemento {} no existe",id);
+            throw  new ResponseNotFound("El elemento " + id + " no existe");
+        }
+
         if (inventarioOptional.isPresent()){
             Inventario inventario = inventarioOptional.get();
             inventario.setIsActive(false);
             inventarioRepository.save(inventario);
-            log.info("El Item {} fue borrado",id);
-        }else {
-            log.error("El item no existe");
+            ResponseDelete responseDelete = new ResponseDelete();
+            responseDelete.setId(inventario.getId());
+            responseDelete.setMensaje("Elemento borrado exitosamente");
+            log.info("Elemento {} borrado exitosamente", id);
+            return responseDelete;
         }
+        return new ResponseDelete();
     }
 }
