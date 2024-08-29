@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ms.tienda.dto.ClienteEmpleadoDTO;
 import ms.tienda.entity.Clientes;
+import ms.tienda.model.ClientesResponse;
 import ms.tienda.service.IClientesService;
 
 @RestController
@@ -27,6 +28,12 @@ public class ClientesController {
     @GetMapping("/clientes")
     public List<Clientes> readAll() {
         return clientesService.readAll();
+    }
+    
+    //leer todo con el response
+    @GetMapping("/clientes-response")
+    public ClientesResponse leerTodo() {
+    	return clientesService.leerTodo();
     }
 
     @GetMapping("/clientes/{id}")

@@ -43,7 +43,7 @@ public class Empleados {
 	    @Column(name = "update_date")
 	    private LocalDateTime updateDate;
 	    
-	    @ManyToOne(cascade = CascadeType.ALL)
+	    @ManyToOne(cascade = CascadeType.MERGE)
 	    @JoinColumn(name = "proveedor_id")
 	    private Proveedores idProveedor;
 	    

@@ -1,5 +1,5 @@
 package ms.tienda.service.impl;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import ms.tienda.constantes.ClientesConstantes;
 import ms.tienda.dto.ClienteEmpleadoDTO;
 import ms.tienda.entity.Clientes;
+import ms.tienda.model.ClientesResponse;
 import ms.tienda.repository.ClientesRepository;
 import ms.tienda.service.IClientesService;
 
@@ -18,10 +19,34 @@ import ms.tienda.service.IClientesService;
 public class ClientesService implements IClientesService {
     @Autowired
     ClientesRepository clientesRepository;
+
+	public ClientesService(ClientesRepository clientesRepository) {
+		this.clientesRepository = clientesRepository;
+	}
+
+	@Override
+    public ClientesResponse leerTodo() {
+        ClientesResponse response = new ClientesResponse();
+    	try {
+            response.setMensaje("Consulta exitosa");
+            response.setCodigo(201L);
+            List<Clientes> clientesActivos = clientesRepository.findAll()
+                .stream()
+                .filter(s -> s.getIsActive() != ClientesConstantes.Filtrado)
+                .toList();
+            response.setClientesList(clientesActivos);
+          return response;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);            
+            response.setMensaje("Error al consumir el servicio");
+            response.setCodigo(404L);
+            response.setClientesList(new ArrayList<>());
+        }return response;
+    }
+    
     @Override
     public List<Clientes> readAll() {
-
-        return clientesRepository.findAll().stream().filter(s->s.getIsActive()!= ClientesConstantes.Filtrado).toList();
+            return clientesRepository.findAll().stream().filter(s->s.getIsActive()!= ClientesConstantes.Filtrado).toList();
     }
 
     @Override
@@ -48,7 +73,6 @@ public class ClientesService implements IClientesService {
     public void delete(Long id) {
             Optional<Clientes> clientesOptional=clientesRepository.findById(id);
             if(clientesOptional.isPresent()){
-
             	Clientes clientes=clientesOptional.get();
             	clientes.setIsActive(false);
                 clientesRepository.save(clientes);
@@ -75,13 +99,9 @@ public class ClientesService implements IClientesService {
     		responseClientes.setNombreCliente(s.getNombre());
     		responseClientes.setIdEmpleado(s.getIdEmpleado().getId());
     		responseClientes.setNombreEmpleado(s.getIdEmpleado().getNombre());
-    		responseClientes.setPuesto(s.getIdEmpleado().getPuesto());
+            responseClientes.setPuesto(s.getIdEmpleado().getPuesto());
     		responseClientes.setSalario(s.getIdEmpleado().getSalario());
-    		
-    		return responseClientes;
-
+            return responseClientes;
     	}).toList();
     }
-
-    
 }

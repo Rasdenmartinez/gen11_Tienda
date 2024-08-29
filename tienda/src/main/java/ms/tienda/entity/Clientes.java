@@ -34,7 +34,7 @@ public class Clientes {
     @Column(name = "telefono")
     private Long telefono;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "empleado_id")
     private Empleados idEmpleado;
     

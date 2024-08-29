@@ -18,9 +18,9 @@ import ms.tienda.service.IEmpleadosService;
 public class EmpleadosService implements IEmpleadosService {
     @Autowired
     EmpleadosRepository empleadosRepository;
+
     @Override
     public List<Empleados> readAll() {
-
         return empleadosRepository.findAll().stream().filter(s->s.getIsActive()!= EmpleadosConstantes.Filtrado).toList();
     }
 
