@@ -19,9 +19,9 @@ public class Inventario {
     @Column(name = "id")
     private Double id;
 
-    //@OneToMany(cascade = CascadeType.ALL)
-    @Column(name = "producto_id")
-    private Double productoId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "producto_id")
+    private Productos productoId;
 
     @Column(name = "stock")
     @NotNull
