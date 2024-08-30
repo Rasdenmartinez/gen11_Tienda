@@ -29,11 +29,12 @@ public class InventarioService implements IInventarioService {
         }
         return inventarioList.stream().map(inventario -> {
             ResponseInventario responseInventario = new ResponseInventario();
-            responseInventario.setId(inventario.getId());
+            responseInventario.setId(inventario.getId());;
             responseInventario.setProductoId(inventario.getProductoId());
             responseInventario.setStock(inventario.getStock());
             return responseInventario;
         }).toList();
+
     }
 
     @Override

@@ -16,20 +16,25 @@ public class Proveedores {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Double id;
+
     @Column(name="nombre_empresa")
     @NotNull
     private String nombreEmpresa;
+
     @Column(name = "contacto")
     @NotNull
     private String contacto;
+
     @Column(name="correo")
     @NotNull
     @Email
     private String correo;
+
     @Column(name = "telefono")
     @NotNull
     @Pattern(regexp = "^\\d{10}$")
     private String telefono;
+
     @Column(name = "is_active")
     private Boolean isActive;
 
