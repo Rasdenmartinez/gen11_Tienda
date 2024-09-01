@@ -1,7 +1,6 @@
 package ms.tienda.controller;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import ms.tienda.entity.Proveedores;
 import ms.tienda.model.ResponseContactos;
 import ms.tienda.model.ResponseDelete;
@@ -10,7 +9,6 @@ import ms.tienda.model.ResponseProveedores;
 import ms.tienda.service.IProveedoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,10 +54,10 @@ public class ProveedoresController {
         return proveedoresService.delete(id);
     }
 
-    // Query
+     // Encontrar contacto por nombre
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/proveedores/contacto")
-    public List<ResponseContactos> contacto(@RequestParam String contacto){
-        return proveedoresService.contactoProveedor(contacto);
+    @GetMapping("/proveedores/contactos")
+    public List<ResponseContactos>proveedores(@RequestParam String contacto){
+        return proveedoresService.findByNombreContacto(contacto);
     }
 }

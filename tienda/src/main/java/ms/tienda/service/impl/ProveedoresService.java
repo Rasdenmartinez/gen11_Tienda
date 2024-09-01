@@ -103,10 +103,10 @@ public class ProveedoresService implements IProveedoresService {
         return new ResponseDelete();
     }
 
-    // Jpa Query contacto
+    // JPA Query encontrar contacto por nombre
     @Override
-    public List<ResponseContactos> contactoProveedor(String contacto){
-        List<Proveedores> proveedoresList=proveedoresRepository.findByContacto(contacto);
+    public List<ResponseContactos> findByNombreContacto(String contacto) {
+        List<Proveedores>proveedoresList=proveedoresRepository.findByNombreContacto("%" + contacto + "%");
         if (proveedoresList.isEmpty()){
             log.error("El contacto {} no se encontro",contacto);
             throw new ResponseNotFound("El contacto " + contacto + " no se encontro");

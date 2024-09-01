@@ -16,7 +16,7 @@ public interface IProveedoresService {
 
     public ResponseDelete delete(Double id);
 
-    public List<ResponseContactos> contactoProveedor(String contacto);
+    public List<ResponseContactos> findByNombreContacto(String contacto);
 
 
 }
