@@ -1,22 +1,20 @@
 package ms.tienda.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 
 public class DetallePedidoDto {
 
-    private Integer pedido;//Pedido
+    private Double pedido;//Pedido
     private LocalDateTime fechaPedido; //Pedidos
     private Double totalPedido; //Pedidos
-    private Integer id; // de DetallesPedido
-    private Double cantidad;//DetallesPedido
-    private Integer producto;//Producctos
+    private Double documento; // de DetallesPedido
+    private Double codigo;//Producctos
     private String name; //Productos
     private String descripcionProducto;//Productos
     private LocalDateTime fechaCreacion;//DetallesPedido

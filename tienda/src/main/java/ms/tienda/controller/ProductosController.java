@@ -24,7 +24,7 @@ private IProductosService productosService;
     }
 
     @GetMapping("/productById/{id}")
-    public Productos readById(@PathVariable Integer id) throws MiException {
+    public Productos readById(@PathVariable Double id) throws MiException {
      return productosService.readById(id);
     }
 
@@ -38,9 +38,9 @@ private IProductosService productosService;
         return productosService.update(productos);
     }
 
-    @DeleteMapping("delete/{id}")
-    public void delete(@PathVariable Integer id) throws MiException {
-        productosService.delete(id);
+    @DeleteMapping("deleteProducto/{id}")
+    public String responceDelete(@PathVariable Double id) throws MiException {
+        return productosService.productoDeleteDto(id);
     }
 
 
@@ -50,8 +50,8 @@ private IProductosService productosService;
         return productosService.NamePrecio(name, precio);
    }
    @GetMapping("productosDto")
-    public List<ProductosDto> findProductoByDto() throws MiException {
-        return productosService.findProductoByDto();
+    public List<ProductosDto> findByProductDto() throws MiException {
+        return productosService.responseProductoByDto();
     }
 
 }

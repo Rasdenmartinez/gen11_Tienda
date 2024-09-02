@@ -1,20 +1,19 @@
 package ms.tienda.model;
 
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class PedidosDto {
-    private Integer idPedido;
+    private Double idPedido;
     private LocalDateTime fechaPedido;
     private Double totalPedido;
     private Long clientesId;
-    private Long id;
     private String nombre;
     private String apellido;
 

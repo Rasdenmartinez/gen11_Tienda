@@ -9,13 +9,16 @@ import java.util.List;
 public interface IPedidosService {
     public List<Pedidos> nomreadAll();
 
-    public Pedidos readById(Integer idPedido);
+    public Pedidos readById(Double id);
 
     public Pedidos insert(Pedidos pedidos);
 
     public Pedidos update(Pedidos pedidos);
 
-    public void delete(Integer idPedido);
+  //  public void delete(Double id); Mensaje DTO
+  public String pedidoDeleteDto(Double id);
 
     public List<PedidosDto> findByPedidosDto();
+
+    public List<PedidosDto> findClienteById(Long id);
 }

@@ -2,12 +2,13 @@ package ms.tienda.controller;
 
 import ms.tienda.entity.DetallesPedido;
 import ms.tienda.entity.Pedidos;
+import ms.tienda.entity.Productos;
 import ms.tienda.model.DetallePedidoDto;
 import ms.tienda.model.DetallesSinJoin;
 import ms.tienda.service.IDetallesPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bimd.List
+
 
 import java.util.List;
 
@@ -21,26 +22,25 @@ public class DetallesPedidoController {
     public List<DetallesPedido> nomreadAll() { return iDetallesPedidoService.nomreadAll();
     }
 
-    @GetMapping("/detallesPedido/{id}")
-    public DetallesPedido readById(@PathVariable Integer id) { return iDetallesPedidoService.readById(id);
+    @GetMapping("/detallesDetalle/{id}")
+    public DetallesPedido readById(@PathVariable Double id) { return iDetallesPedidoService.readById(id);
     }
 
-    @PostMapping("/crear")
+    @PostMapping("/crearDetalle")
     public DetallesPedido insert(@RequestBody DetallesPedido detallesPedido) {
         return iDetallesPedidoService.insert(detallesPedido);
-
     }
 
-    @PutMapping("/actualizar")
+    @PutMapping("/actualizarDetalle")
     public DetallesPedido update(@RequestBody DetallesPedido detallesPedido) {
         return iDetallesPedidoService.update(detallesPedido);
     }
-    @DeleteMapping("eliminar/{id}")
-    public void delete(@PathVariable Integer id) { iDetallesPedidoService.delete(id);
+    @DeleteMapping("eliminarDetalle/{id}")
+    public void delete(@PathVariable Double id) { iDetallesPedidoService.detalleDeleteDto(id);
     }
 
     @GetMapping("/dtailDto")
-    public List<DetallePedidoDto> responseDtallePedidoDto() {
+    public List<DetallePedidoDto> findDetallesPedidoProductoDto() {
         return iDetallesPedidoService.responseDtallePedidoDto();
 
     }

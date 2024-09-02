@@ -1,24 +1,23 @@
 package ms.tienda.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "detalles_pedido")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@Data
+
 public class DetallesPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
-    @Column(name = "cantidad")
-    private Double cantidad;
+    private Double id;
     @Column(name = "precio_unitario")
     private Double precioUnitario;
     @Column(name = "is_active")
@@ -29,9 +28,9 @@ public class DetallesPedido {
     private LocalDateTime modificacionFecha;
 
    //Join con Pedidos
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pedido_id")
-    private Pedidos idPedido;
+    private Pedidos pedido;
 
     //Join con Producto
     @ManyToOne(cascade = CascadeType.ALL)

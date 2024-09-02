@@ -8,12 +8,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 
-public interface ProductosRepository extends JpaRepository<Productos, Integer> {
-//JPA query
+public interface ProductosRepository extends JpaRepository<Productos, Double> {
+
    public List<Productos> findByNameAndPrecio(String name, Double precio);
-   @Query(value = "SELECT p.id, p.producto, p.descripcion_producto, p.precio, " +
+   @Query(value = "SELECT p.id, p.nombre_producto, p.descripcion_producto, p.precio, " +
                  "p.categoria, p.stock, p.creacion_fecha, modificacion_fecha, "+
                 "p.is_active, p.proveedor_id "+
                   "FROM productos p ", nativeQuery = true)
    public List<Productos> findByProductDto();
+
+
 }

@@ -1,6 +1,7 @@
 package ms.tienda.service;
 
 import ms.tienda.entity.DetallesPedido;
+import ms.tienda.entity.Pedidos;
 import ms.tienda.entity.Productos;
 import ms.tienda.model.DetallePedidoDto;
 import ms.tienda.model.DetallesSinJoin;
@@ -11,17 +12,22 @@ import java.util.List;
 public interface IDetallesPedidoService {
     public List<DetallesPedido> nomreadAll();
 
-    public DetallesPedido readById(Integer id);
+    public DetallesPedido readById(Double id);
 
     public DetallesPedido insert(DetallesPedido detallesPedido);
 
     public DetallesPedido update(DetallesPedido detallesPedido);
 
-    public void delete(Integer id);
+  //  public void delete(Double id);
+  public String detalleDeleteDto(Double idPedido);
 
-    List<DetallePedidoDto> responseDtallePedidoDto();
+   public   List<DetallePedidoDto> responseDtallePedidoDto();
 
-    List<DetallesSinJoin> findDettalleSmple();
+   public List<DetallesSinJoin> findDettalleSmple();
+
+   // public DetallesPedido insertDetallesPedido(DetallesPedido detallesPedido);
+
+
 
 
 

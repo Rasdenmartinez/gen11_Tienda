@@ -1,17 +1,16 @@
 package ms.tienda.model;
 
 import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public class ProductosDto {
 
-    private Integer id;
-    private String name;
+    private Double codigo;
+    private String producto;
     private String descripcionProducto;
     private Double precio;
     private String categoria;

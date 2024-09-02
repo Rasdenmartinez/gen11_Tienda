@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DetallesSinJoin {
 
-    private Integer id;
-
-    private Double cantidad;
+    private Double documento;
 
     private Double precioUnitario;
 }

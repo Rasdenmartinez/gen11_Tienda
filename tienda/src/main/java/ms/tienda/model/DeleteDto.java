@@ -9,5 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeleteDto {
 
-    private String mensaje = " El id se elimino correctamente ";
+    private String mensajeProducto = "/n El 'Id' del producto se ah eliminado correctamente! ";
+    private  String mensajePedido = "/n El 'Id' del pedido se ah eliminado correctamente! ";
+    private  String mensajeDetalle = "/n El 'Id' del detalle se ah eliminado correctamente! ";
 }

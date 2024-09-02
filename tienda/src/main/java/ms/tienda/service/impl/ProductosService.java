@@ -3,118 +3,80 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.ConstantesCarlos.Constantes;
 import ms.tienda.entity.Productos;
+import ms.tienda.model.DeleteDto;
 import ms.tienda.model.ProductosDto;
 import ms.tienda.repository.ProductosRepository;
 import ms.tienda.service.IProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
-
 
 @Slf4j
 @Service
 public class ProductosService implements IProductosService {
-   @Autowired
+    @Autowired
     ProductosRepository productosRepository;
-    @Override
-    public List<Productos> readAll() throws MiException {
-       try{
-        return productosRepository.findAll().stream().filter(s -> s.getIsActive() == Constantes.Filtro).toList();
-       } catch(Exception e){
-             throw new MiException("Error al obtener lista de productos");
-             }
 
+    @Override
+    public List<Productos> readAll() {
+        return productosRepository.findAll().stream().filter(s -> s.getIsActive() == Constantes.Filtro).toList();
     }
 
-
     @Override
-    public Productos readById(Integer id) throws MiException {
-        try {
-            Optional<Productos> productosOptional = productosRepository.findById(id);
-            if (productosOptional.isPresent() && productosOptional.get().getIsActive() == Constantes.Filtro) {
-                return productosOptional.get();
-            } else {
-                return new Productos();
-            }
-        }catch (Exception e){
-            throw new MiException("Error al buscar id de producto");
+    public Productos readById(Double id) throws MiException {
+        Optional<Productos> productosOptional = productosRepository.findById(id);
+        if(productosOptional.isPresent() && productosOptional.get().getIsActive()==Constantes.Filtro){
+           return productosOptional.get();
         }
+        return new Productos();
     }
 
     @Override
     public Productos insert(Productos productos) throws MiException {
-
-        try {
-            productos.setIsActive(Constantes.Filtro);
-            productos.setFechaCreacion(LocalDateTime.now());
-            return productosRepository.save(productos);
-        }catch(Exception e){
-            throw new MiException("Error al insertar producto");
-        }
+        productos.setIsActive(Constantes.Filtro);
+        return productosRepository.save(productos);
     }
 
     @Override
     public Productos update(Productos productos) throws MiException {
-        try {
-            productos.setModificacionFecha(LocalDateTime.now());
-            return productosRepository.save(productos);
-        }catch(Exception e){
-            throw  new MiException("Error en el update de productos");
-        }
-
+        return productosRepository.save(productos);
     }
 
     @Override
-    public void delete(Integer id) throws MiException {
-        try {
-            Optional<Productos> productosOptional = productosRepository.findById(id);
-            if (productosOptional.isPresent()) {
-                Productos productos = productosOptional.get();
-                productos.setIsActive(Constantes.Filtro);
-                productosRepository.save(productos);
-                log.info(" Producto {} deleted", id);
-
-            }
-
-        }catch(Exception e){
-            throw  new MiException("Error al Eliminar producto");
+    public String productoDeleteDto(Double id)  {                              //Delete lógico!!
+        Optional<Productos> productosOptional = productosRepository.findById(id);
+        if(productosOptional.isPresent()){
+            Productos productos = productosOptional.get();
+            productos.setIsActive(!Constantes.Filtro);
+            productosRepository.save(productos);
         }
+        DeleteDto deleteDto = new DeleteDto();
+        return deleteDto.getMensajeProducto();
     }
 
     @Override
     public List<Productos> NamePrecio(String name, Double precio) throws MiException {
-        try {
-
-            return productosRepository.findByNameAndPrecio(name, precio);
-        }catch(Exception e){
-
-            throw new MiException("Error al encontrar nombre y precio");
-        }
+        return productosRepository.findByNameAndPrecio(name, precio);
     }
 
     @Override
-    public List<ProductosDto> findProductoByDto() throws MiException {
-     try {
-         List<Productos> productosList = productosRepository.findByProductDto();
-         return productosList.stream().map(s -> {
-             ProductosDto productosDto = new ProductosDto();
-             productosDto.setId(s.getId());
-             productosDto.setName(s.getName());
-             productosDto.setDescripcionProducto(s.getDescripcionProducto());
-             productosDto.setPrecio(s.getPrecio());
-             productosDto.setCategoria(s.getCategoria());
-             productosDto.setStock(s.getStock());
+    public List<ProductosDto> responseProductoByDto() throws MiException {
+        List<Productos> productosList = productosRepository.findByProductDto();
 
-             return productosDto;
-         }).toList();
-     }catch(Exception e){
-         throw new MiException("Error al generar DTO");
-     }
+        return productosList.stream().map(s->{
+            ProductosDto productDto = new ProductosDto();
+            productDto.setCodigo(s.getId());
+            productDto.setProducto(s.getName());
+            productDto.setDescripcionProducto(s.getDescripcionProducto());
+            productDto.setPrecio(s.getPrecio());
+            productDto.setCategoria(s.getCategoria());
+            productDto.setStock(s.getStock());
+
+
+            return  productDto;
+        }).toList();
     }
-
 
 }

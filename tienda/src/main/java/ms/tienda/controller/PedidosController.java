@@ -1,5 +1,6 @@
 package ms.tienda.controller;
 
+import ms.tienda.ConstantesCarlos.Constantes;
 import ms.tienda.entity.Pedidos;
 import ms.tienda.entity.Productos;
 import ms.tienda.model.PedidosDto;
@@ -18,11 +19,11 @@ public class PedidosController {
 
     //CRUD - Create, Read, Update, Delete;
     @GetMapping("/allPedidos")
-    public List<Pedidos> nomreadAll() { return pedidosService.nomreadAll();
+    public List<Pedidos> nomreadAll() { return pedidosService.nomreadAll().stream().filter(s->s.getIsActive()== Constantes.Filtro).toList();
     }
 
     @GetMapping("/pedidosId/{id}")
-    public Pedidos readById(@PathVariable Integer idPedido) { return pedidosService.readById(idPedido);
+    public Pedidos readById(@PathVariable Double id) { return pedidosService.readById(id);
     }
 
     @PostMapping("/pedidosInsert")
@@ -37,9 +38,14 @@ public class PedidosController {
     }
 
     @DeleteMapping("pedidosDelete/{id}")
-    public void delete(@PathVariable Integer idPedido) { pedidosService.delete(idPedido);
+    public void delete(@PathVariable Double id) { pedidosService.pedidoDeleteDto(id);
 
     }
+    @GetMapping("finByClienteId/{id}")
+    public List<PedidosDto> findByClienteId(@PathVariable Long id){
+        return pedidosService.findClienteById(id);
+    }
+
     @GetMapping("pedidosDto")
     public List<PedidosDto> findByPedidosDto(){
         return pedidosService.findByPedidosDto();
