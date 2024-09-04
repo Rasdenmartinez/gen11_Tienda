@@ -3,9 +3,11 @@ package ms.tienda.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import ms.tienda.constantes.InventarioConstantes;
 import ms.tienda.entity.Inventario;
+import ms.tienda.entity.Productos;
 import ms.tienda.exceptions.ResponseNotFound;
 import ms.tienda.model.ResponseDelete;
 import ms.tienda.model.ResponseInventario;
+import ms.tienda.model.ResponseProducto;
 import ms.tienda.repository.InventarioRepository;
 import ms.tienda.service.IInventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,12 @@ public class InventarioService implements IInventarioService {
         }
         return inventarioList.stream().map(inventario -> {
             ResponseInventario responseInventario = new ResponseInventario();
-            responseInventario.setId(inventario.getId());;
-            responseInventario.setProductoId(inventario.getProductoId());
+            responseInventario.setId(inventario.getId());
+            responseInventario.setProductoId(inventario.getProductoId().getId());
+            responseInventario.setNombreProducto(responseInventario.getNombreProducto());
+            responseInventario.setNombreProducto(inventario.getProductoId().getNombreProducto());
+            responseInventario.setCategoria(inventario.getProductoId().getCategoria());
+            responseInventario.setStock(responseInventario.getStock());
             responseInventario.setStock(inventario.getStock());
             return responseInventario;
         }).toList();
@@ -53,8 +59,9 @@ public class InventarioService implements IInventarioService {
         if (inventarioOptional.isPresent() && inventarioOptional.get().getIsActive()!=InventarioConstantes.Filtrado){
             Inventario inventario = inventarioOptional.get();
             ResponseInventario responseInventario = new ResponseInventario();
+            ResponseProducto responseProducto = new ResponseProducto();
             responseInventario.setId(inventario.getId());
-            responseInventario.setProductoId(inventario.getProductoId());
+            responseInventario.setNombreProducto(responseInventario.getNombreProducto());
             responseInventario.setStock(inventario.getStock());
             log.info("Consulta exitosa");
             return responseInventario;

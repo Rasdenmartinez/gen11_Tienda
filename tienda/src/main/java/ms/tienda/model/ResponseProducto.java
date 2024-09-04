@@ -3,17 +3,14 @@ package ms.tienda.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ms.tienda.entity.Productos;
-
-import java.util.List;
+import ms.tienda.entity.Proveedores;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseInventario {
+public class ResponseProducto {
     private Double id;
-    private Double productoId;
     private String nombreProducto;
+    private Double precio;
     private String categoria;
-    private Integer stock;
 }
